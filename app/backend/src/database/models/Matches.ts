@@ -9,7 +9,7 @@ export default class Matches extends Model {
     home_team_goals!: number;
     away_team!: number;
     away_team_goals!: number;
-    in_progress!: number;
+    in_progress!: boolean;
   }
 
   Matches.init({
