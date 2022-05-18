@@ -23,13 +23,13 @@ export default class UserService {
 
   public async login(reqPassword:string, reqEmail:string) {
     const user = await this.model.findOne({ where: { email: reqEmail } }) as IUser;
-    if (!user) return null;
+    if (!user) return {};
     if (reqPassword === user.password) {
       const token = UserService.generateToken(user);
       const { id, username, role, email } = user;
 
       return { user: { id, username, role, email }, token };
     }
-    return null;
+    return {};
   }
 }
