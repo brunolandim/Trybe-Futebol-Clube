@@ -26,10 +26,10 @@ export default class UserService {
     if (!user) return null;
     if (reqPassword === user.password) {
       const token = UserService.generateToken(user);
-      const { id, username, role, email, password } = user;
+      const { id, username, role, email } = user;
 
-      return { user: { id, username, role, email, password }, token };
+      return { user: { id, username, role, email }, token };
     }
-    return {};
+    return null;
   }
 }
