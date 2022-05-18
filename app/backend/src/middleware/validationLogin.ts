@@ -20,7 +20,7 @@ export const validatePass = (req:Request, res:Response, next:NextFunction) => {
   if (typeof password !== 'string') {
     return res.status(401).json({ message: 'Incorrect email or password' });
   }
-  if (!password.length <= 7) {
+  if (password.length <= 7) {
     return res.status(401).json({ message: 'Incorrect email or password' });
   }
   next();
