@@ -7,11 +7,12 @@ export default class UserController {
   public async login(req:Request, res:Response, next:NextFunction) {
     try {
       const { email, password } = req.body;
-      const { user, token } = await service.login(password, email);
+      const result = await service.login(password, email);
+      if (!result) { return res.status(404).json({ message: 'Incorrect email or password' }); }
 
-      if (!user) { return res.status(404).json({ message: 'Incorrect email or password' }); }
-
+      const { user, token } = result;
       return res.status(200).json({ user, token });
+
     } catch (e) {
       next(e);
     }
