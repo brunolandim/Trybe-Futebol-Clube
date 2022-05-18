@@ -23,6 +23,7 @@ export default class UserService {
 
   public async login(reqPassword:string, reqEmail:string) {
     const user = await this.model.findOne({ where: { email: reqEmail } }) as IUser;
+    if (!user) return null;
     if (reqPassword === user.password) {
       const token = UserService.generateToken(user);
       const { id, username, role, email, password } = user;
