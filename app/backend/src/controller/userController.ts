@@ -8,11 +8,11 @@ export default class UserController {
     try {
       const { email, password } = req.body;
       const result = await service.login(password, email);
-      if (!result) { return res.status(404).json({ message: 'Incorrect email or password' }); }
-
+      if (Object.keys(result).length === 0) {
+        return res.status(401).json({ message: 'Incorrect email or password' });
+      }
       const { user, token } = result;
       return res.status(200).json({ user, token });
-
     } catch (e) {
       next(e);
     }
