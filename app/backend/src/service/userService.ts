@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { sign, verify, JwtPayload } from 'jsonwebtoken';
-import IUser from '../database/interfaces/interface';
+import IUser from '../interfaces/interface';
 import Users from '../database/models/Users';
 
 const SECRET = fs.readFileSync('./jwt.evaluation.key');
