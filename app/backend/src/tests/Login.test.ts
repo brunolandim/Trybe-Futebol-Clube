@@ -11,7 +11,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('testa da rota /login', () => {
+describe('teste da rota /login', () => {
   let chaiHttpResponse: Response;
 
   before(async() => {
@@ -29,7 +29,7 @@ describe('testa da rota /login', () => {
   it('retorna um objeto user com as propriedades esperadas ', async () => {
     chaiHttpResponse = await chai.request(app).post('/login').send({
       email:'user@user.com',
-      password:'$2a$08$Y8Abi8jXvsXyqm.rmp0B.uQBA5qUz7T6Ghlg/CvVr/gLxYj5UAZVO',
+      password:'secret_user',
     })
     expect(chaiHttpResponse.body.user).to.have.a.property('id');
     expect(chaiHttpResponse.body.user).to.have.a.property('username');
