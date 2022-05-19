@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import { sign, verify, JwtPayload } from 'jsonwebtoken';
+import { compareSync } from 'bcryptjs';
 import IUser from '../interfaces/interface';
 import Users from '../database/models/Users';
 
@@ -23,7 +24,7 @@ export default class UserService {
 
   public async login(reqPassword:string, reqEmail:string) {
     const user = await this.model.findOne({ where: { email: reqEmail } }) as IUser;
-    if (!user) return {};
+    if (!user || !compareSync(reqPassword, user.password)) return {};
     if (reqPassword === user.password) {
       const token = UserService.generateToken(user);
       const { id, username, role, email } = user;
