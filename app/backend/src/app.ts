@@ -27,7 +27,6 @@ class App {
     this.app.use(express.json());
 
     this.app.use('/login', userRouter);
-    this.app.use('/login/validate', userRouter);
     this.app.use('/teams', teamRouter);
     this.app.use('/teams/:id', teamRouter);
   }
