@@ -28,7 +28,6 @@ class App {
 
     this.app.use('/login', userRouter);
     this.app.use('/teams', teamRouter);
-    this.app.use('/teams/:id', teamRouter);
   }
 
   // ...
