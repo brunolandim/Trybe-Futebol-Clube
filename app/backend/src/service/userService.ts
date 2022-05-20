@@ -17,9 +17,12 @@ export default class UserService {
     return token;
   }
 
-  static validateToken(token:string):JwtPayload {
-    const decoded = verify(token, SECRET);
-    return decoded as JwtPayload;
+  public validateToken(token:string):JwtPayload {
+    const decoded = verify(token, SECRET) as JwtPayload;
+    if (!decoded) {
+      return {};
+    }
+    return { ...decoded, secret: token };
   }
 
   public async login(reqPassword:string, reqEmail:string) {

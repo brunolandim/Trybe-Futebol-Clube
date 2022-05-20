@@ -21,4 +21,21 @@ export default class UserController {
       next(e);
     }
   }
+
+  public async getUser(req:Request, res:Response, next:NextFunction) {
+    try {
+      const token = req.headers.authorization;
+      if (!token) {
+        return res.status(401).json({ message: 'Token not found' });
+      }
+      const user = this.service.validateToken(token);
+      if (Object.keys(user).length === 0) {
+        return res.status(401).json({ message: 'Token invalid' });
+      }
+      const { payloadUser: { role } } = user;
+      return res.status(200).json(role);
+    } catch (e) {
+      next(e);
+    }
+  }
 }

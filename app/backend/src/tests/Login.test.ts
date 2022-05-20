@@ -11,8 +11,9 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
+let chaiHttpResponse: Response;
+
 describe('teste da rota /login', () => {
-  let chaiHttpResponse: Response;
 
   before(async() => {
     sinon.stub(Users,'findOne').resolves({
