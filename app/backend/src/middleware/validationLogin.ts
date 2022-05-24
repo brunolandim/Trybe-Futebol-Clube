@@ -1,4 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
+import { verify } from 'jsonwebtoken';
+import * as fs from 'fs';
+import { ITokenData } from '../interfaces/interface';
+
+const SECRET = fs.readFileSync('./jwt.evaluation.key');
 
 const errMessage = { message: 'Incorrect email or password' };
 
@@ -26,4 +31,19 @@ export const validatePass = (req:Request, res:Response, next:NextFunction) => {
     return res.status(401).json(errMessage);
   }
   next();
+};
+export const validateToken = (req:ITokenData, res:Response, next:NextFunction) => {
+  try {
+    const token = req.headers.authorization;
+
+    if (!token) return res.status(401).json({ message: 'Token Not Found' });
+
+    const decode = verify(token, SECRET);
+    if (typeof decode === 'string') return res.status(401).json({ message: 'Not a string' });
+
+    req.payloadUser = decode.data;
+    next();
+  } catch (e) {
+    return res.status(401).json({ message: 'Invalid Token' });
+  }
 };

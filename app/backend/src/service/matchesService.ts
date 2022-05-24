@@ -1,3 +1,4 @@
+import { IMatch } from '../interfaces/interface';
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
 
@@ -30,5 +31,11 @@ export default class MatchesService {
         { model: this.modelTeam, as: 'teamAway', attributes: { exclude: ['id'] } }],
     });
     return inProgressFalse;
+  }
+
+  public async createMach(match :IMatch) {
+    const newMatch = await this.modelMatch.create({ ...match });
+    if (newMatch.awayTeam === newMatch.homeTeam) return {};
+    return newMatch;
   }
 }
