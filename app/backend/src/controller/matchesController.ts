@@ -48,17 +48,16 @@ export default class MatchesController {
   public async create(req:Request, res:Response, __next:NextFunction) {
     try {
       const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
-      const newMatch = await this.service.createMach({ homeTeam,
+      const Match = await this.service.createMach({ homeTeam,
         awayTeam,
         homeTeamGoals,
         awayTeamGoals,
-        inProgress: true });
-      if (Object.keys(newMatch).length === 0) {
-        return res.status(404).json({
-          message: 'It is not possible to create a match with two equal teams"',
-        });
+        inProgress: true }, homeTeam, awayTeam);
+      if (typeof Match === 'string') {
+        return res.status(404).json({ message: Match });
       }
-      return res.status(201).json(newMatch);
+
+      return res.status(201).json(Match);
     } catch (e) {
       return res.status(500).end();
     }

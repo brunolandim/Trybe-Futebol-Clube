@@ -33,9 +33,19 @@ export default class MatchesService {
     return inProgressFalse;
   }
 
-  public async createMach(match :IMatch) {
+  public async createMach(match :IMatch, home:number, away:number) {
+    const fistTeam = await this.modelTeam.findByPk(home);
+    const secondTeams = await this.modelTeam.findByPk(away);
+
+    if (!fistTeam || !secondTeams) {
+      return 'There is no team with such id!';
+    }
+
+    if (fistTeam.id === secondTeams.id) {
+      return 'It is not possible to create a match with two equal teams';
+    }
     const newMatch = await this.modelMatch.create({ ...match });
-    if (newMatch.awayTeam === newMatch.homeTeam) return {};
+
     return newMatch;
   }
 }
