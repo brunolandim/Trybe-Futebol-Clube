@@ -49,10 +49,13 @@ export default class MatchesController {
     try {
       const { id } = req.params;
       const { homeTeamGoals, awayTeamGoals } = req.body;
-      await this.service.updateMatch(Number(id), homeTeamGoals, awayTeamGoals);
-      return res.status(200).json({ message: 'Update Sucess' });
+
+      const payload = { homeTeamGoals, awayTeamGoals };
+
+      const updateMatch = await this.service.updateMatch(Number(id), payload);
+      return res.status(200).json(updateMatch);
     } catch (error) {
-      res.status(500).end();
+      return res.status(500).end();
     }
   }
 

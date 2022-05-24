@@ -49,8 +49,9 @@ export default class MatchesService {
     return newMatch;
   }
 
-  public async updateMatch(id:number, home:number, away:number) {
-    await this.modelMatch.update({ home, away }, { where: { id } });
+  public async updateMatch(id:number, payload:object) {
+    const [update] = await this.modelMatch.update({ ...payload }, { where: { id } });
+    return update;
   }
 
   public async finishMatch(id:number) {
