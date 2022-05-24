@@ -11,5 +11,6 @@ matchRouter.post(
   validateToken,
   (req, res, next) => matchesController.create(req, res, next),
 );
+matchRouter.patch('/:id/finish', (req, res, next) => matchesController.finish(req, res, next));
 
 export default matchRouter;

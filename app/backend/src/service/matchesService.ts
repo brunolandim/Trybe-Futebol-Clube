@@ -48,4 +48,8 @@ export default class MatchesService {
 
     return newMatch;
   }
+
+  public async finishMatch(id:number) {
+    await this.modelMatch.update({ inProgress: false }, { where: { id } });
+  }
 }
