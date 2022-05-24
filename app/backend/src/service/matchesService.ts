@@ -49,6 +49,10 @@ export default class MatchesService {
     return newMatch;
   }
 
+  public async updateMatch(id:number, home:number, away:number) {
+    await this.modelMatch.update({ home, away }, { where: { id } });
+  }
+
   public async finishMatch(id:number) {
     await this.modelMatch.update({ inProgress: false }, { where: { id } });
   }
