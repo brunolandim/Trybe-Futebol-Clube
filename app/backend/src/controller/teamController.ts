@@ -2,23 +2,23 @@ import { NextFunction, Request, Response } from 'express';
 import TeamService from '../service/teamService';
 
 export default class TeamController {
-  service:TeamService;
+  public service:TeamService;
 
   constructor() {
     this.service = new TeamService();
   }
 
-  public async getAll(__req:Request, res:Response, next:NextFunction) {
+  public async getAll(__req:Request, res:Response, __next:NextFunction) {
     try {
       const getTeam = await this.service.getAll();
 
       return res.status(200).json(getTeam);
     } catch (e) {
-      next(e);
+      return res.status(500).end();
     }
   }
 
-  public async getById(req:Request, res:Response, next:NextFunction) {
+  public async getById(req:Request, res:Response, __next:NextFunction) {
     try {
       const { id } = req.params;
       const team = await this.service.getById(Number(id));
@@ -28,7 +28,7 @@ export default class TeamController {
 
       return res.status(200).json(team);
     } catch (e) {
-      next(e);
+      return res.status(500).end();
     }
   }
 }

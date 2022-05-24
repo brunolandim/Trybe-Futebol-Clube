@@ -8,7 +8,7 @@ export default class UserController {
     this.service = new UserService();
   }
 
-  public async login(req:Request, res:Response, next:NextFunction) {
+  public async login(req:Request, res:Response, __next:NextFunction) {
     try {
       const { email, password } = req.body;
       const result = await this.service.login(password, email);
@@ -18,11 +18,11 @@ export default class UserController {
       const { user, token } = result;
       return res.status(200).json({ user, token });
     } catch (e) {
-      next(e);
+      return res.status(500).end();
     }
   }
 
-  public async getUser(req:Request, res:Response, next:NextFunction) {
+  public async getUser(req:Request, res:Response, __next:NextFunction) {
     try {
       const token = req.headers.authorization;
       if (!token) {
@@ -35,7 +35,7 @@ export default class UserController {
       const { payloadUser: { role } } = user;
       return res.status(200).json(role);
     } catch (e) {
-      next(e);
+      return res.status(500).end();
     }
   }
 }
