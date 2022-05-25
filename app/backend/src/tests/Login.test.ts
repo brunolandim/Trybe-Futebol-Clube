@@ -6,6 +6,7 @@ import { app } from '../app';
 import Users from '../database/models/Users';
 
 import { Response } from 'superagent';
+import Matches from '../database/models/Matches';
 
 chai.use(chaiHttp);
 
@@ -39,3 +40,31 @@ describe('teste da rota /login', () => {
     expect(chaiHttpResponse.body).to.have.a.property('token');
   });
 });
+describe('teste da rota /matches ',()=>{
+  before(async() => {
+    sinon.stub(Matches,'findAll').resolves([{
+      homeTeam: 1,
+      awayTeam: 1,
+      homeTeamGoals: 1,
+      awayTeamGoals: 1,
+     inProgress: true,
+    }] as Matches[])
+  })
+  after(() => {
+    (Users.findOne as sinon.SinonStub).restore();
+  })
+  it('retorna um objeto user com as propriedades esperadas ', async () => {
+    chaiHttpResponse = await chai.request(app).post('/matches').send({
+      homeTeam: 1,
+      awayTeam: 1,
+      homeTeamGoals: 1,
+      awayTeamGoals: 1,
+      inProgress: true,
+    })
+    expect(chaiHttpResponse.body).to.have.a.property('homeTeam');
+    expect(chaiHttpResponse.body).to.have.a.property('awayTeam');
+    expect(chaiHttpResponse.body).to.have.a.property('homeTeamGoals');
+    expect(chaiHttpResponse.body).to.have.a.property('awayTeamGoals');
+    expect(chaiHttpResponse.body).to.have.a.property('inProgress');
+  });
+})

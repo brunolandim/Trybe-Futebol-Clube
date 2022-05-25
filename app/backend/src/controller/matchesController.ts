@@ -2,6 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 import UserService from '../service/userService';
 import MatchesService from '../service/matchesService';
 
+const idEqual = { message: 'It is not possible to create a match with two equal teams' };
+const badRequest = { message: 'There is no team with such id!' };
+
 export default class MatchesController {
   public service:MatchesService;
 
@@ -77,9 +80,11 @@ export default class MatchesController {
         homeTeamGoals,
         awayTeamGoals,
         inProgress: true }, homeTeam, awayTeam);
-      if (typeof Match === 'string') {
-        return res.status(401).json({ message: Match });
+
+      if (Match === 'It is not possible to create a match with two equal teams') {
+        return res.status(401).json(idEqual);
       }
+      if (Match === 'There is no team with such id!') return res.status(404).json(badRequest);
 
       return res.status(201).json(Match);
     } catch (e) {
