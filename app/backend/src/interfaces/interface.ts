@@ -25,3 +25,26 @@ export interface ITokenData extends Request{
     role?: string;
   }
 }
+
+export interface ILeaderBoardHome {
+  id: number;
+  homeTeam: number;
+  homeTeamGoals: number;
+  awayTeam: number;
+  awayTeamGoals: number;
+  inProgress: boolean;
+  teamHome: {
+    teamName: string;
+  }
+}
+export interface ILeaderBoardAway {
+  id: number;
+  homeTeam: number;
+  homeTeamGoals: number;
+  awayTeam: number;
+  awayTeamGoals: number;
+  inProgress: boolean;
+  teamAway: {
+    teamName: string;
+  }
+}
