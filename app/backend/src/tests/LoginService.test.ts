@@ -1,6 +1,5 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
-const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
 
