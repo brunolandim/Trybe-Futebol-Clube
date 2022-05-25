@@ -62,8 +62,8 @@ export default class MatchesController {
   public async finish(req:Request, res:Response, __next:NextFunction) {
     try {
       const { id } = req.params;
-      const endGame = await this.service.finishMatch(Number(id));
-      return res.status(200).json(endGame);
+      await this.service.finishMatch(Number(id));
+      return res.status(200).json({ message: 'Finished' });
     } catch (error) {
       return res.status(500).end();
     }
@@ -78,7 +78,7 @@ export default class MatchesController {
         awayTeamGoals,
         inProgress: true }, homeTeam, awayTeam);
       if (typeof Match === 'string') {
-        return res.status(404).json({ message: Match });
+        return res.status(401).json({ message: Match });
       }
 
       return res.status(201).json(Match);
