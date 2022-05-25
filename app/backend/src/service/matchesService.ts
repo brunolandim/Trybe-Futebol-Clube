@@ -55,6 +55,7 @@ export default class MatchesService {
   }
 
   public async finishMatch(id:number) {
-    await this.modelMatch.update({ inProgress: false }, { where: { id } });
+    const [finish] = await this.modelMatch.update({ inProgress: false }, { where: { id } });
+    return finish;
   }
 }

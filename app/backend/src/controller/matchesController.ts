@@ -62,8 +62,8 @@ export default class MatchesController {
   public async finish(req:Request, res:Response, __next:NextFunction) {
     try {
       const { id } = req.params;
-      await this.service.finishMatch(Number(id));
-      return res.status(200).json({ message: 'Finished' });
+      const endGame = await this.service.finishMatch(Number(id));
+      return res.status(200).json(endGame);
     } catch (error) {
       return res.status(500).end();
     }
